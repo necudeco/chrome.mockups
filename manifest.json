@@ -1,0 +1,26 @@
+{
+    "manifest_version": 3,
+    "name": "Take Screenshot",
+    "description": "Building a screenshot taking extension",
+    "version": "202202",
+    "author": "necudeco@gmail.com",
+    "permissions":[
+        "activeTab",
+        "tabs",
+        "downloads",
+        "scripting",
+        "contextMenus"
+    ],
+    "host_permissions": [
+        "http://localhost:3000/*"
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "action": {
+        "default_title": "Take a screen shot!" ,
+        "default_icon": "camera.png",
+        "default_popup": "popup.html"
+    }
+}
