@@ -80,12 +80,15 @@ async function getAllTabs(wid) {
     await chrome.downloads.download(opts);
   }
 
+  const urlLaptop = "https://tareas.nodefire.net/mockup/laptop";
+  const urlIphone = "https://tareas.nodefire.net/mockup/iphone";
+
   async function screenshotForLaptop(sender){
-    await generateScreenshot(1200, 700+150);
+    await generateScreenshot(1200, 700+150, urlLaptop);
   }
 
   async function screenshotForAndroid(sender){
-    generateScreenshot(500, 950+150);
+    await generateScreenshot(500, 1150+150, urlIphone);
   }
 
   function dataURItoBlob(dataURI) {
@@ -99,11 +102,11 @@ async function getAllTabs(wid) {
 }
 
 
-  async function upload(img){
+  async function upload(img, url){
 
     console.log("UPLOAD");
     
-    const url = "http://localhost:3000/mockup/laptop";
+    
     
     img = dataURItoBlob(img);
     
@@ -133,7 +136,7 @@ async function getAllTabs(wid) {
   }
 
 
-  async function generateScreenshot(_w, _h){
+  async function generateScreenshot(_w, _h, url){
 
 
     let win =  await chrome.windows.getCurrent();
@@ -145,8 +148,12 @@ async function getAllTabs(wid) {
     let winID = win.id;
     
     if ( tabs.length > 1 ){
-        newwin = await chrome.windows.create({ focused: true, tabId: tab.id, height: _h, width: _w });
+        const opt = { focused: true, tabId: tab.id, height: _h, width: _w };
+        console.log("CREATE WINDOW", opt);
+        newwin = await chrome.windows.create(opt);
         winID = newwin.id;
+    
+        await chrome.windows.update(winID, {height: opt.height});
     }else{
         //newwin = win;
     }
@@ -165,7 +172,7 @@ async function getAllTabs(wid) {
 
     try{
 
-        await upload(screenshotUrl);
+        await upload(screenshotUrl, url);
 
   
     }catch(e){
