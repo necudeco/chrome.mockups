@@ -12,7 +12,8 @@
         "contextMenus"
     ],
     "host_permissions": [
-        "http://localhost:3000/*"
+        "http://localhost:3000/*",
+        "https://tareas.nodefire.net/*"
     ],
     "background": {
         "service_worker": "background.js",
@@ -20,7 +21,6 @@
     },
     "action": {
         "default_title": "Take a screen shot!" ,
-        "default_icon": "camera.png",
-        "default_popup": "popup.html"
+        "default_icon": "camera.png"
     }
 }
